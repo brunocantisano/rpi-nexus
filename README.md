@@ -70,10 +70,15 @@ Para operar as funcionalidades você precisará usar a ferramenta Makefile.
 * `tag`: roda as tarefas: tag-latest e tag-version
 * `removecontainers`: para todos os containers em execução e remove
 * `create-dir:`: cria o diretório do nexus-data
-* `set-permission`: atribui permissão de escrita no diretório nexus-data
 * `sonar`: roda o sonar-scanner para fazer a análise pelo sonar
 
 # Como funciona: 
+
+* Cria o diretório a ser utilizado pelo Nexus
+
+```sh
+make create-dir
+```
 
 ```sh
 make run
@@ -154,37 +159,23 @@ Crie um novo repositório do Docker (proxy) e configure-o como:
 Isso agrupará todos os repositórios acima e fornecerá uma URL única para configurar seus clientes para fazer o download. Crie um novo repositório do Docker (grupo) e configure-o como:
 
 ![Docker Blob Store Group](assets/docker-blob-group.png)
-
 ![Docker Group](assets/docker-group.png)
 ![Docker Group](assets/docker-group2.png)
 
 Você pode criar quantos repositórios precisar e agrupá-los no repositório de grupos. Esta etapa é realmente opcional para usar o Nexus 3 como um repositório do Docker, porque podemos continuar fazendo downloads e uploads para os repositórios proxy e hospedado, como será discutido mais adiante. Configurando seus clientes e projetos para usar seus repositórios Nexus. Para interagir com seu repositório, a primeira coisa é configurar o Docker daemon em sua máquina para aceitar trabalhar com HTTP em vez de HTTPS. Como exatamente fazer essa configuração depende do seu sistema operacional, você deve verificar a documentação do dockerd.
 
-No Ubuntu e Raspbian, coloque esse conteúdo em: `/etc/docker/daemon.json`: 
+No Raspbian, coloque esse conteúdo em: `/etc/docker/daemon.json`: 
 
 ```json
 {
-	"insecure-registries": 
-	[
-	  "raspberrypi:9412",
-	  "raspberrypi:9413"
-	],
-	"disable-legacy-registry": true
-}
-```
-
-No Windows, Coloque esse conteúdo em `C:\ProgramData\Docker\config\daemon.json`:
-
-```json
-{
-	"insecure-registries": 
-	[
-	  "raspberrypi:9412",
-	  "raspberrypi:9413"
-	],
-	"debug": true,
-	"experimental": true,
-	"registry-mirrors": []
+  "insecure-registries":
+  [
+    "raspberrypi:9412",
+    "raspberrypi:9413"
+  ],
+  "debug": true,
+  "experimental": true,
+  "registry-mirrors": []
 }
 ```
 
