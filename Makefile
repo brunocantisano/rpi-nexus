@@ -46,7 +46,7 @@ dev: build-nc run ## Run container in development mode
 up: build run ## Run container on port configured in `config.env` (Alias to run)
 
 stop: ## Stop and remove a running container
-	docker stop $(IMAGE_REPO_NAME); docker rm $(IMAGE_REPO_NAME)
+	docker stop nexus; docker rm nexus
 
 publish: build-nc repo-login publish-latest publish-version ## Publish the `{version}` and `latest` tagged containers to DockerHub
 
@@ -95,11 +95,7 @@ clean: ## Remove node_modules
 
 create-dir: ## create nexus-data directory
 	mkdir nexus-data
-
-set-permission: ## set permission to use nexus-data
-	docker exec -it -u 0 nexus sh
-	chown -R nexus:nexus /nexus-data
-	exit
+	sudo chmod 777 nexus-data
 
 repo-login: ## Auto login to dockerhub
 	docker login -u $(DOCKERHUB_USER) -p $(DOCKERHUB_PASS) raspberrypi:$(PORT2)
