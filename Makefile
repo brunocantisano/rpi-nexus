@@ -8,14 +8,15 @@ cfg ?= config.env
 include $(cfg)
 export $(shell sed 's/=.*//' $(cfg))
 
-DOCKER_HUB_URL=registry.hub.docker.com/library/
-
 # HELP
 # This will output the help for each task
 # thanks to https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 .PHONY: help
 
-FILE_TAR                        :=./$(IMAGE_REPO_NAME).tar
+NEXUS_REPO						:=$(OWNER):$(NEXUS_PORT)
+TAG								:=$(IMAGE_NAME):$(IMAGE_VERSION)
+DOCKER_IMAGE_NAME				:=$(NEXUS_REPO)/$(IMAGE_NAME)
+FILE_TAR                        :=./$(IMAGE_NAME).tar
 FILE_GZ                         :=$(FILE_TAR).gz
 UNAME_S                         :=$(shell uname -apps)
 ifeq ($(UNAME_S),Linux)
@@ -33,13 +34,13 @@ help: ## This help.
 
 # DOCKER TASKS
 build: ## Build the release container.
-	docker build -t $(IMAGE_REPO_NAME) .
+	docker build -t $(IMAGE_NAME) .
 
 build-nc: ## Build the container without caching
-	docker build --no-cache -t $(IMAGE_REPO_NAME) .
+	docker build --no-cache -t $(IMAGE_NAME) .
 
 run: ## Run container on port configured in `config.env`
-	docker run -d -p $(PORT1):8081 -p $(PORT2):8082 -p $(PORT3):8083 --name nexus --restart=always -v ~/rpi-nexus/nexus-data:/usr/local/nexus/data --name=nexus $(IMAGE_REPO_NAME)
+	docker run -d -p $(PORT1):8081 -p $(PORT2):8082 -p $(PORT3):8083 --name nexus --restart=always -v ~/rpi-nexus/nexus-data:/usr/local/nexus/data --name=nexus $(IMAGE_NAME)
 
 dev: build-nc run ## Run container in development mode
 
@@ -52,24 +53,24 @@ publish: build-nc repo-login publish-latest publish-version ## Publish the `{ver
 
 publish-latest: tag-latest ## Publish the `latest` tagged container to DockerHub
 	@echo 'publish latest to DockerHub'
-	docker push $(DOCKER_HUB_URL)/$(IMAGE_REPO_NAME):latest
+	docker push $(DOCKER_IMAGE_NAME):latest
 
 publish-version: tag-version ## Publish the `{version}` taged container to DockerHub
-	@echo 'publish $(VERSION) to DockerHub'
-	docker push $(DOCKER_HUB_URL)/$(IMAGE_REPO_NAME):$(VERSION)
+	@echo 'publish $(IMAGE_VERSION) to DockerHub'
+	docker push $(DOCKER_IMAGE_NAME):$(IMAGE_VERSION)
 
 tag: tag-latest tag-version ## Generate container tags for the `{version}` and `latest` tags
 
 tag-latest: ## Generate container `{version}` tag
 	@echo 'create tag latest'
-	docker tag $(IMAGE_REPO_NAME):latest $(DOCKER_HUB_URL)/$(IMAGE_REPO_NAME):latest
+	docker tag $(IMAGE_NAME):latest $(DOCKER_IMAGE_NAME):latest
 
 tag-version: ## Generate container `latest` tag
-	@echo 'create tag $(VERSION)'
-	docker tag $(IMAGE_REPO_NAME):$(VERSION) $(DOCKER_HUB_URL)/$(IMAGE_REPO_NAME):$(VERSION)
+	@echo 'create tag $(IMAGE_VERSION)'
+	docker tag $(IMAGE_NAME):$(IMAGE_VERSION) $(DOCKER_IMAGE_NAME):$(IMAGE_VERSION)
 
 save: ## Save the container as a gzip file
-	docker image save $(DOCKER_IMAGE_TAGNAME) > $(FILE_TAR)
+	docker image save $(DOCKER_IMAGE_NAME):$(IMAGE_VERSION) > $(FILE_TAR)
 	@[ -f $(FILE_TAR) ] && gzip $(FILE_TAR) || true
 
 load: ## Load the container from a gzip file
@@ -83,7 +84,7 @@ dangling: ## Remove temporary images
 	@docker rmi $$(docker images -a -q -f dangling=true)
 
 remove: ## Remove current image
-	docker rmi -f $(IMAGE_REPO_NAME)
+	docker rmi -f $(IMAGE_NAME)
 
 rebuild: remove build ## Remove and build
 
@@ -105,4 +106,4 @@ nexus-pass: ##  buscando a senha no servidor
 	docker exec -it nexus cat /usr/local/nexus/data/admin.password
 
 pull: ## faz download da última versão do repositório
-	docker pull $(DOCKER_HUB_URL)/$(IMAGE_REPO_NAME):latest
+	docker pull $(DOCKER_IMAGE_NAME):latest
