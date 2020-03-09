@@ -10,14 +10,12 @@ RUN cd /tmp \
     && rm -f /etc/apt/sources.list \
     && apt-get update
 
-RUN apt-get install -y curl \
-    && curl https://download.sonatype.com/nexus/3/nexus-${NEXUS_VERSION}-unix.tar.gz -o /tmp/nexus-${NEXUS_VERSION}-unix.tar.gz -s \
+RUN curl https://download.sonatype.com/nexus/3/nexus-${NEXUS_VERSION}-unix.tar.gz -o /tmp/nexus-${NEXUS_VERSION}-unix.tar.gz -s \
     && tar -zxf /tmp/nexus-${NEXUS_VERSION}-unix.tar.gz -C /usr/local \
     && mv /usr/local/nexus-${NEXUS_VERSION}* /usr/local/nexus \
     && rm -f /tmp/nexus-${NEXUS_VERSION}-unix.tar.gz \
     && useradd -m nexus \
     && chown -R nexus /usr/local/nexus \
-    && apt-get purge --auto-remove wget \
     && rm -rf /var/lib/apt/lists/*
 
 COPY files/nexus.vmoptions /usr/local/nexus/bin/nexus.vmoptions

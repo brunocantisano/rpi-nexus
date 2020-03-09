@@ -13,9 +13,9 @@ export $(shell sed 's/=.*//' $(cfg))
 # thanks to https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 .PHONY: help
 
-NEXUS_REPO						:=$(OWNER):$(NEXUS_PORT)
-TAG								:=$(IMAGE_NAME):$(IMAGE_VERSION)
-DOCKER_IMAGE_NAME				:=$(NEXUS_REPO)/$(IMAGE_NAME)
+NEXUS_REPO		        :=$(OWNER):$(NEXUS_PORT)
+TAG				:=$(IMAGE_NAME):$(IMAGE_VERSION)
+DOCKER_IMAGE_NAME		:=$(NEXUS_REPO)/$(IMAGE_NAME)
 FILE_TAR                        :=./$(IMAGE_NAME).tar
 FILE_GZ                         :=$(FILE_TAR).gz
 UNAME_S                         :=$(shell uname -apps)
@@ -49,7 +49,7 @@ up: build run ## Run container on port configured in `config.env` (Alias to run)
 stop: ## Stop and remove a running container
 	docker stop nexus; docker rm nexus
 
-publish: build-nc repo-login publish-latest publish-version ## Publish the `{version}` and `latest` tagged containers to DockerHub
+publish: tag repo-login publish-latest publish-version ## Publish the `{version}` and `latest` tagged containers to DockerHub
 
 publish-latest: tag-latest ## Publish the `latest` tagged container to DockerHub
 	@echo 'publish latest to DockerHub'
@@ -67,7 +67,7 @@ tag-latest: ## Generate container `{version}` tag
 
 tag-version: ## Generate container `latest` tag
 	@echo 'create tag $(IMAGE_VERSION)'
-	docker tag $(IMAGE_NAME):$(IMAGE_VERSION) $(DOCKER_IMAGE_NAME):$(IMAGE_VERSION)
+	docker tag $(IMAGE_NAME):latest $(DOCKER_IMAGE_NAME):$(IMAGE_VERSION)
 
 save: ## Save the container as a gzip file
 	docker image save $(DOCKER_IMAGE_NAME):$(IMAGE_VERSION) > $(FILE_TAR)
@@ -99,8 +99,8 @@ create-dir: ## create nexus-data directory
 	sudo chmod 777 nexus-data
 
 repo-login: ## Auto login to dockerhub
-	docker login -u $(DOCKERHUB_USER) -p $(DOCKERHUB_PASS) raspberrypi:$(PORT2)
-	docker login -u $(DOCKERHUB_USER) -p $(DOCKERHUB_PASS) raspberrypi:$(PORT3)
+	docker login -u $(NEXUS_REPO_USER) -p $(NEXUS_REPO_PASS) raspberrypi:$(PORT2)
+	docker login -u $(NEXUS_REPO_USER) -p $(NEXUS_REPO_PASS) raspberrypi:$(PORT3)
 
 nexus-pass: ##  buscando a senha no servidor
 	docker exec -it nexus cat /usr/local/nexus/data/admin.password
