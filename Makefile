@@ -49,14 +49,14 @@ up: build run ## Run container on port configured in `config.env` (Alias to run)
 stop: ## Stop and remove a running container
 	docker stop nexus; docker rm nexus
 
-publish: tag repo-login publish-latest publish-version ## Publish the `{version}` and `latest` tagged containers to DockerHub
+publish: tag publish-latest publish-version ## Publish the `{version}` and `latest` tagged containers to Nexus Repository
 
-publish-latest: tag-latest ## Publish the `latest` tagged container to DockerHub
-	@echo 'publish latest to DockerHub'
+publish-latest: tag-latest ## Publish the `latest` tagged container to Nexus Repository
+	@echo 'publish latest to Nexus Repository'
 	docker push $(DOCKER_IMAGE_NAME):latest
 
-publish-version: tag-version ## Publish the `{version}` taged container to DockerHub
-	@echo 'publish $(IMAGE_VERSION) to DockerHub'
+publish-version: tag-version ## Publish the `{version}` taged container to Nexus repository
+	@echo 'publish $(IMAGE_VERSION) to Nexus Repository'
 	docker push $(DOCKER_IMAGE_NAME):$(IMAGE_VERSION)
 
 tag: tag-latest tag-version ## Generate container tags for the `{version}` and `latest` tags
@@ -96,7 +96,7 @@ clean: ## Remove node_modules
 
 create-dir: ## create nexus-data directory
 	mkdir nexus-data
-	sudo chmod 777 nexus-data
+	sudo chown -R 200:200 nexus-data
 
 repo-login: ## Auto login to dockerhub
 	docker login -u $(NEXUS_REPO_USER) -p $(NEXUS_REPO_PASS) raspberrypi:$(PORT2)
@@ -107,3 +107,6 @@ nexus-pass: ##  buscando a senha no servidor
 
 pull: ## faz download da última versão do repositório
 	docker pull $(DOCKER_IMAGE_NAME):latest
+
+log: ## see logs
+	docker logs -f nexus
