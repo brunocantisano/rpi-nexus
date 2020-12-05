@@ -1,16 +1,16 @@
-FROM paperinik/rpi-java8:latest
+FROM balenalib/raspberrypi3-debian-openjdk:11
 MAINTAINER Bruno Cardoso Cantisano <bruno.cantisano@gmail.com>
 
 LABEL version latest
 LABEL description Sonatype Nexus Repository Container
 
-ENV NEXUS_VERSION 3.18.1-01
+ENV NEXUS_VERSION 3.29.0-02
 
 RUN cd /tmp \
     && rm -f /etc/apt/sources.list \
     && apt-get update
 
-RUN curl https://download.sonatype.com/nexus/3/nexus-${NEXUS_VERSION}-unix.tar.gz -o /tmp/nexus-${NEXUS_VERSION}-unix.tar.gz -s \
+RUN curl https://sonatype-download.global.ssl.fastly.net/repository/downloads-prod-group/3/nexus-${NEXUS_VERSION}-unix.tar.gz -o /tmp/nexus-${NEXUS_VERSION}-unix.tar.gz -s \    
     && tar -zxf /tmp/nexus-${NEXUS_VERSION}-unix.tar.gz -C /usr/local \
     && mv /usr/local/nexus-${NEXUS_VERSION}* /usr/local/nexus \
     && rm -f /tmp/nexus-${NEXUS_VERSION}-unix.tar.gz \
