@@ -19,7 +19,7 @@ Neste tutorial, iremos aprender a subir um servidor de artefatos (Nexus Sonatype
 Este container Docker implementa Sonatype Nexus no Raspberry pi.
 
  * Raspbian base image: [resin/rpi-raspbian](https://hub.docker.com/r/resin/rpi-raspbian/)
- * Nexus Repository Manager OSS 3.18.1-01
+ * Nexus Repository Manager OSS 3.29.2-02
 
 Para operar as funcionalidades você precisará usar a ferramenta Makefile.
 
@@ -101,7 +101,7 @@ Exemplo de resultado da execução:
 Imagens
 
 - URL para acesso: 
-  * http://raspberrypi:9411
+  * http://raspberrypi4:9411 (windows acessando raspberrypi) ou http://raspberrypi4.local:9411 (linux acessando raspberrypi)
 
     - usuario: `admin`
     - senha: `51bed803-7f61-4c90-97cc-5eac58f502e3`
@@ -170,8 +170,8 @@ No Raspbian, coloque esse conteúdo em: `/etc/docker/daemon.json`:
 {
   "insecure-registries":
   [
-    "raspberrypi:9412",
-    "raspberrypi:9413"
+    "raspberrypi4.local:9412",
+    "raspberrypi4.local:9413"
   ],
   "debug": true,
   "experimental": true,
@@ -181,7 +181,7 @@ No Raspbian, coloque esse conteúdo em: `/etc/docker/daemon.json`:
 
 Onde:
 
-* `raspberrypi` é o seu servidor nexus
+* `raspberrypi4.local` é o seu servidor nexus
 * `9412` porta privada do servidor nexus
 * `9413` porta privada do servidor nexus
 
@@ -192,10 +192,10 @@ Isso irá criar uma entrada no `/.docker/config.json`
 ```json
 {
   "auths": {
-    "raspberrypi:9412": {
+    "raspberrypi4.local:9412": {
       "auth": "YWRtaW46YWRtaW4xMjM="
     },
-    "raspberrypi:9413": {
+    "raspberrypi4.local:9413": {
       "auth": "YWRtaW46YWRtaW4xMjM="
     }
   }
