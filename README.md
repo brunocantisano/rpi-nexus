@@ -187,7 +187,7 @@ Onde:
 
 Você precisa reiniciar o seu daemon depois de setar isso: `sudo systemctl restart docker`
 No Windows ou Mac você deve configurar o seu deamon assim:
-Isso irá criar uma entrada no `/.docker/config.json`
+Isso irá criar uma entrada no `~/.docker/config.json`
 
 ```json
 {
