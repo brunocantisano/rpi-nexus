@@ -99,8 +99,8 @@ create-dir: ## create nexus-data directory
 	sudo chown -R 200:200 nexus-data
 
 repo-login: ## Auto login to dockerhub
-	docker login -u $(NEXUS_REPO_USER) -p $(NEXUS_REPO_PASS) raspberrypi:$(PORT2)
-	docker login -u $(NEXUS_REPO_USER) -p $(NEXUS_REPO_PASS) raspberrypi:$(PORT3)
+	docker login -u $(NEXUS_REPO_USER) -p $(NEXUS_REPO_PASS) raspberrypi4.local:$(PORT2)
+	docker login -u $(NEXUS_REPO_USER) -p $(NEXUS_REPO_PASS) raspberrypi4.local:$(PORT3)
 
 nexus-pass: ##  buscando a senha no servidor
 	docker exec -it nexus cat /usr/local/nexus/data/admin.password
