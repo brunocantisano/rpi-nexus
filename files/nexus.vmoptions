@@ -1,7 +1,7 @@
--Xms2703m
--Xmx2703m
+-Xms1200M
+-Xmx1200M
 -XX:MaxMetaspaceSize=3200m
--XX:MaxDirectMemorySize=2703m
+-XX:MaxDirectMemorySize=2G
 -XX:+UnlockDiagnosticVMOptions
 -XX:+LogVMOutput
 -XX:LogFile=../sonatype-work/nexus3/log/jvm.log
@@ -36,4 +36,5 @@
 #
 # comment out this vmoption when using Java9+
 #
--Djava.endorsed.dirs=lib/endorsed
+-Djava.endorsed.dirs=lib/endorsed:/opt/sonatype/jna
+

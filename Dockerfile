@@ -15,6 +15,11 @@ RUN wget --no-check-certificate https://sonatype-download.global.ssl.fastly.net/
     && rm -f /tmp/nexus-${NEXUS_VERSION}-unix.tar.gz \
     && useradd -m nexus \
     && chown -R nexus /usr/local/nexus \
+    && mkdir -p /opt/sonatype/jna \
+    && cd /opt/sonatype/jna \
+    && wget https://repo1.maven.org/maven2/net/java/dev/jna/jna/5.5.0/jna-5.5.0.jar \
+    && wget https://repo1.maven.org/maven2/net/java/dev/jna/jna-platform/5.5.0/jna-platform-5.5.0.jar \
+    && chmod +x /opt/sonatype/jna/* \
     && rm -rf /var/lib/apt/lists/*
 
 COPY files/nexus.vmoptions /usr/local/nexus/bin/nexus.vmoptions

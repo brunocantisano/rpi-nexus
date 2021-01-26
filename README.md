@@ -212,3 +212,5 @@ Isso irá criar uma entrada no `~/.docker/config.json`
 - `make pull`
 
 **Ambas as portas funcionarão. O uso da porta `9412` será conectado ao repositório do grupo, que contém o repositório hospedado. Atenha-se à porta `9413` para evitar imagens duplicadas em suas máquinas. Se você escolher ficar com a porta `9413` para obter suas próprias imagens, provavelmente poderá pular a criação do repositório de grupo, se preferir.**
+
+[fixes](https://github.com/bhamail/pinexus/blob/master/src/site/markdown/nexussetup.md.vm)
