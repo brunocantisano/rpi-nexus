@@ -14,7 +14,7 @@ RUN wget --no-check-certificate https://sonatype-download.global.ssl.fastly.net/
     && mv /usr/local/nexus-${NEXUS_VERSION}* /usr/local/nexus \
     && rm -f /tmp/nexus-${NEXUS_VERSION}-unix.tar.gz \
     && useradd -m nexus \
-    && chown -R nexus /usr/local/nexus \
+    && chown -R nexus /usr/local/nexus /usr/local/sonatype-work/nexus3 \
     && mkdir -p /opt/sonatype/jna \
     && cd /opt/sonatype/jna \
     && wget https://repo1.maven.org/maven2/net/java/dev/jna/jna/5.5.0/jna-5.5.0.jar \
@@ -29,7 +29,7 @@ COPY files/nexus.vmoptions /usr/local/nexus/bin/nexus.vmoptions
 #docker-private 8083 
 EXPOSE 8081 8082 8083
 
-VOLUME /usr/local/nexus/data
+VOLUME /usr/local/sonatype-work/nexus3/db
 
 WORKDIR /usr/local/nexus/bin
 

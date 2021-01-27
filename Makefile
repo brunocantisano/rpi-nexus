@@ -95,8 +95,8 @@ clean: ## Remove node_modules
 	@rm -rf node_modules
 
 create-dir: ## create nexus-data directory
-	mkdir nexus-data
-	sudo chown -R 200:200 nexus-data
+	mkdir ~/projetos/dados/nexus-data
+	sudo chown -R 200:200 ~/projetos/dados/nexus-data
 
 repo-login: ## Auto login to dockerhub
 	docker login -u $(NEXUS_REPO_USER) -p $(NEXUS_REPO_PASS) raspberrypi4.local:$(PORT2)
