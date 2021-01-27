@@ -103,7 +103,7 @@ repo-login: ## Auto login to dockerhub
 	docker login -u $(NEXUS_REPO_USER) -p $(NEXUS_REPO_PASS) raspberrypi4.local:$(PORT3)
 
 nexus-pass: ##  buscando a senha no servidor
-	docker exec -it nexus cat /usr/local/nexus/data/admin.password
+	docker exec -it nexus cat /usr/local/sonatype-work/nexus3/admin.password
 
 pull: ## faz download da última versão do repositório
 	docker pull $(DOCKER_IMAGE_NAME):latest
