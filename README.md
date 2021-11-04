@@ -12,10 +12,6 @@ Neste tutorial, iremos aprender a subir um servidor de artefatos (Nexus Sonatype
 
 # Nexus
 
-![docker_logo](assets/docker.png)
-![docker_nexus_logo](assets/logo-nexus.png)
-![docker_paperinik_logo](assets/docker_paperinik_120x120.png)
-
 Este container Docker implementa Sonatype Nexus no Raspberry pi.
 
  * Raspbian base image: [resin/rpi-raspbian](https://hub.docker.com/r/resin/rpi-raspbian/)
