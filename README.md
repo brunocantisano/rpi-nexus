@@ -1,5 +1,7 @@
 # IOT - Tutorial Nexus Sonatype no Raspberry Pi
 
+![rpi-nexus](https://img.shields.io/docker/pulls/paperinik/rpi-nexus)
+
 O Raspberry Pi 4, versão mais recente do Mini PC, tem hardwares de: 1Gb, 2Gb ou 4Gb, custando em torno de R$ 140 para a versão de 1Gb e que é ideal para fazer POCs (Proof of concepts).
 
 ![Raspberry Pi 4](assets/raspberry.jpg)
