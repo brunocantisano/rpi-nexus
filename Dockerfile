@@ -1,10 +1,10 @@
-FROM paperinik/rpi-java:8
+FROM balenalib/raspberry-pi-openjdk:8-stretch 
 MAINTAINER Bruno Cardoso Cantisano <bruno.cantisano@gmail.com>
 
 LABEL version latest
 LABEL description Sonatype Nexus Repository Container
 
-ENV NEXUS_VERSION 3.29.2-02
+ARG NEXUS_VERSION
 
 RUN apt-get update \
     && apt-get install -y wget

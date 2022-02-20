@@ -34,10 +34,10 @@ help: ## This help.
 
 # DOCKER TASKS
 build: ## Build the release container.
-	docker build -t $(IMAGE_NAME) .
+	docker build -t $(IMAGE_NAME) --build-arg NEXUS_VERSION=$(IMAGE_VERSION) .
 
 build-nc: ## Build the container without caching
-	docker build --no-cache -t $(IMAGE_NAME) .
+	docker build --no-cache -t $(IMAGE_NAME) --build-arg NEXUS_VERSION=$(NEXUS_VERSION) .
 
 run: ## Run container on port configured in `config.env`
 	docker run -d -p $(PORT1):8081 -p $(PORT2):8082 -p $(PORT3):8083 --name nexus --restart=always -v ~/rpi-nexus/nexus-data:/usr/local/nexus/data --name=nexus $(IMAGE_NAME)
