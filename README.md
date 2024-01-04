@@ -2,6 +2,7 @@
 
 [![Docker Stars](https://img.shields.io/docker/stars/paperinik/rpi-nexus.svg)](https://hub.docker.com/r/paperinik/rpi-nexus/)
 ![rpi-nexus](https://img.shields.io/docker/pulls/paperinik/rpi-nexus)
+<a href='https://ko-fi.com/brunocantisano' target='_blank'><img height='15' style='border:0px;height:26px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' />
 
 O Raspberry Pi 4, versão mais recente do Mini PC, tem hardwares de: 1Gb, 2Gb ou 4Gb, custando em torno de R$ 140 para a versão de 1Gb e que é ideal para fazer POCs (Proof of concepts).
 
